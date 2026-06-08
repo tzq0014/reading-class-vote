@@ -16,7 +16,7 @@ function initData() {
     sessions: [
       {
         id: 1,
-        title: '文献：古籍资源检索技巧',
+        title: '古籍资源检索技巧',
         date: '6月9日(周二)',
         options: [
           { id: '1a', label: '18:00-19:30', votes: 0 },
@@ -26,7 +26,7 @@ function initData() {
       },
       {
         id: 2,
-        title: '文字：《诗经·伐檀》研读',
+        title: '《毛诗注疏·伐檀》研读',
         date: '6月10日(周三)',
         options: [
           { id: '2a', label: '14:00-15:30', votes: 0 },
@@ -36,7 +36,7 @@ function initData() {
       },
       {
         id: 3,
-        title: '文学：《文心雕龙·神思》研读',
+        title: '《文心雕龙·神思》导读',
         date: '6月11日(周四)',
         options: [
           { id: '3a', label: '14:00-15:30', votes: 0 },
