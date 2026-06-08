@@ -66,6 +66,18 @@ body {
   margin-top: 6px;
 }
 
+.location-info {
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+  color: #8B4513;
+  background: #FFF8F0;
+  padding: 8px 16px;
+  border-radius: 10px;
+  margin: 12px 0;
+  border: 1px solid #F0E0D0;
+}
+
 .notice {
   text-align: left;
   background: #FFF8F0;
