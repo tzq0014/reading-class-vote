@@ -80,7 +80,7 @@ app.post('/api/vote', (req, res) => {
   // 防重复：同IP只能投一次
   const alreadyVoted = data.voters.some(v => v.ip === ip);
   if (alreadyVoted) {
-    return res.status(409).json({ error: '你已经投过票了，不能重复投票' });
+    return res.status(409).json({ error: '你已经投过票了，感谢参与' });
   }
 
   // 验证每个投票

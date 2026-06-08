@@ -102,6 +102,19 @@ body {
   color: var(--primary-light);
 }
 
+.notice ul li.highlight {
+  background: linear-gradient(90deg, #FFF3CD 0%, #FFEAA7 100%);
+  padding: 6px 10px 6px 18px;
+  border-radius: 6px;
+  margin-top: 6px;
+  font-weight: 600;
+  color: #8B4513;
+}
+
+.notice ul li.highlight::before {
+  color: #D4A017;
+}
+
 /* ===== 读书班卡片 ===== */
 .session-card {
   background: var(--card-bg);
@@ -169,9 +182,14 @@ body {
 }
 
 .session-date-text {
-  font-size: 13px;
-  color: var(--text-light);
-  margin-top: 2px;
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #D2691E;
+  background: #FFF3E0;
+  padding: 3px 12px;
+  border-radius: 20px;
+  margin-top: 4px;
 }
 
 .session-toggle-icon {
@@ -403,9 +421,14 @@ body {
 }
 
 .result-card-title .result-date {
+  display: inline-block;
   font-size: 13px;
-  color: var(--text-light);
-  font-weight: 400;
+  font-weight: 600;
+  color: #D2691E;
+  background: #FFF3E0;
+  padding: 2px 10px;
+  border-radius: 20px;
+  margin-left: 6px;
 }
 
 .option-bar {

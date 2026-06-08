@@ -37,7 +37,7 @@ let selections = {};
       updateSubmitState();
     }
   } catch (err) {
-    statusMsg.textContent = '⚠️ 加载失败，请刷新页面重试';
+    statusMsg.textContent = '⚠️ 暂时无法加载，刷新一下试试';
     statusMsg.className = 'status-msg error';
   }
 })();
@@ -154,7 +154,7 @@ function updateSubmitState() {
   const totalSelected = Object.keys(selections).length;
 
   if (totalSelected === 0) {
-    selectedHint.textContent = '📌 点击上面的场次卡片，选择你要参加的读书班';
+    selectedHint.textContent = '📌 点击场次卡片，选择你能参加的时间段';
     selectedHint.className = 'selected-hint';
     submitBtn.disabled = true;
     submitBtn.innerHTML = `<span>提交投票</span>`;
@@ -208,9 +208,18 @@ submitBtn.addEventListener('click', async () => {
   }
 
   if (votes.length === 0) {
-    statusMsg.textContent = '⚠️ 请至少选择一场读书班';
+    statusMsg.textContent = '⚠️ 至少选择一场才能提交';
     statusMsg.className = 'status-msg error';
     return;
+  }
+
+  // 如果选了两场及以上，弹窗提醒确认
+  if (votes.length >= 2) {
+    const confirmed = confirm('同学你选了多场读书班，请确保都能按时到场参加哦～😄');
+    if (!confirmed) {
+      statusMsg.textContent = '';
+      return;
+    }
   }
 
   submitBtn.disabled = true;
@@ -266,7 +275,7 @@ async function showResults() {
     resultArea.classList.remove('hidden');
     resultArea.scrollIntoView({ behavior: 'smooth' });
   } catch (err) {
-    statusMsg.textContent = '⚠️ 加载结果失败';
+    statusMsg.textContent = '⚠️ 暂时无法加载结果';
     statusMsg.className = 'status-msg error';
   }
 }
