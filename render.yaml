@@ -1,0 +1,8 @@
+# Render Blueprint - 一键部署配置文件
+services:
+  - type: web
+    name: reading-class-vote
+    env: node
+    buildCommand: npm install
+    startCommand: node server.js
+    plan: free
