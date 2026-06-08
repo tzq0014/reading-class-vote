@@ -19,8 +19,8 @@ function initData() {
         title: '文献：古籍资源检索技巧',
         date: '6月9日(周二)',
         options: [
-          { id: '1a', label: '14:00-15:30', votes: 0 },
-          { id: '1b', label: '18:00-20:30', votes: 0 },
+          { id: '1a', label: '18:00-19:30', votes: 0 },
+          { id: '1b', label: '19:00-20:30', votes: 0 },
           { id: '1c', label: '20:00-21:30', votes: 0 },
         ]
       },
@@ -45,7 +45,7 @@ function initData() {
         ]
       }
     ],
-    voters: []  // 记录已投票的IP（简单防重复）
+    voters: []  // { ip, selections: [{sessionId, optionId}], time }
   };
   if (!fs.existsSync(DATA_FILE)) {
     fs.writeFileSync(DATA_FILE, JSON.stringify(defaultData, null, 2));
@@ -66,49 +66,55 @@ app.get('/api/votes', (req, res) => {
   res.json({ sessions: data.sessions });
 });
 
-// 投票
+// 批量投票 — 一次提交多场
 app.post('/api/vote', (req, res) => {
-  const { sessionId, optionId } = req.body;
+  const { votes } = req.body;  // [{ sessionId, optionId }]
   const ip = req.ip || req.connection.remoteAddress;
 
-  if (!sessionId || !optionId) {
-    return res.status(400).json({ error: '参数不完整' });
+  if (!votes || !Array.isArray(votes) || votes.length === 0) {
+    return res.status(400).json({ error: '请至少选择一场读书班' });
   }
 
   const data = loadData();
 
-  // 简单防重复：同IP不能对同场读书班重复投票
-  const alreadyVoted = data.voters.some(v => v.ip === ip && v.sessionId === sessionId);
+  // 防重复：同IP只能投一次
+  const alreadyVoted = data.voters.some(v => v.ip === ip);
   if (alreadyVoted) {
-    return res.status(409).json({ error: '你已经对这场读书班投过票了' });
+    return res.status(409).json({ error: '你已经投过票了，不能重复投票' });
   }
 
-  const session = data.sessions.find(s => s.id === sessionId);
-  if (!session) {
-    return res.status(404).json({ error: '找不到该场读书班' });
+  // 验证每个投票
+  for (const v of votes) {
+    const session = data.sessions.find(s => s.id === v.sessionId);
+    if (!session) {
+      return res.status(404).json({ error: `找不到读书班 ID: ${v.sessionId}` });
+    }
+    const option = session.options.find(o => o.id === v.optionId);
+    if (!option) {
+      return res.status(404).json({ error: `找不到选项: ${v.optionId}` });
+    }
+    option.votes += 1;
   }
 
-  const option = session.options.find(o => o.id === optionId);
-  if (!option) {
-    return res.status(404).json({ error: '找不到该选项' });
-  }
-
-  option.votes += 1;
-  data.voters.push({ ip, sessionId, optionId, time: new Date().toISOString() });
+  data.voters.push({
+    ip,
+    selections: votes,
+    time: new Date().toISOString()
+  });
   saveData(data);
 
   res.json({ success: true, sessions: data.sessions });
 });
 
-// 重置投票（仅管理员调用方便测试）
+// 重置投票
 app.post('/api/reset', (req, res) => {
   initData();
   res.json({ success: true, message: '已重置所有投票数据' });
 });
 
 initData();
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`\n  ✅ 投票系统已启动！`);
-  console.log(`  🌐 打开浏览器访问: http://localhost:${PORT}`);
-  console.log(`  📱 手机同局域网访问: http://你的IP:${PORT}\n`);
+  console.log(`  🌐 本地访问: http://localhost:${PORT}`);
+  console.log(`  📱 局域网访问: http://你的IP:${PORT}\n`);
 });

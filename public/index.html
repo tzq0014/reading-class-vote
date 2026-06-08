@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>读书班投票</title>
+  <title>读书班时间投票</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -13,8 +13,15 @@
     <header class="header">
       <div class="header-icon">📖</div>
       <h1>《中华优秀传统文化导论》<br>课程配套读书班</h1>
-      <p class="subtitle">请选择每场读书班你能参加的时间段</p>
-      <p class="hint">⏰ 每场以得票最多的时间段为准</p>
+      <p class="subtitle">投票确定每场读书班的时间段</p>
+      <div class="notice">
+        <strong>📌 说明</strong>
+        <ul>
+          <li>自愿参加，<strong>至少参加一场</strong>，多选不限</li>
+          <li>每场选择一个你能参加的时间段，得票最多的即为该场举办时间</li>
+          <li>参与情况以现场签到为准，计入平时成绩</li>
+        </ul>
+      </div>
     </header>
 
     <!-- 投票区 -->
@@ -24,6 +31,7 @@
       </div>
 
       <div class="action-bar">
+        <p id="selectedHint" class="selected-hint">还未选择任何场次</p>
         <button id="submitBtn" class="btn-primary" disabled>
           <span>提交投票</span>
         </button>
@@ -41,12 +49,14 @@
       <div id="resultsContainer">
         <!-- JS动态渲染 -->
       </div>
-      <button id="refreshBtn" class="btn-secondary">🔄 刷新结果</button>
+      <div class="action-bar">
+        <button id="refreshBtn" class="btn-secondary">🔄 刷新结果</button>
+      </div>
     </div>
 
     <!-- 底部 -->
     <footer class="footer">
-      <p>投票数据实时保存 · 请慎重选择</p>
+      <p>每人不限设备，只统计一次投票</p>
     </footer>
   </div>
 
