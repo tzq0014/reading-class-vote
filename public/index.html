@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>读书班投票</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+
+    <!-- 头部 -->
+    <header class="header">
+      <div class="header-icon">📖</div>
+      <h1>《中华优秀传统文化导论》<br>课程配套读书班</h1>
+      <p class="subtitle">请选择每场读书班你能参加的时间段</p>
+      <p class="hint">⏰ 每场以得票最多的时间段为准</p>
+    </header>
+
+    <!-- 投票区 -->
+    <div id="voteArea">
+      <div id="sessionsContainer">
+        <!-- JS动态渲染 -->
+      </div>
+
+      <div class="action-bar">
+        <button id="submitBtn" class="btn-primary" disabled>
+          <span>提交投票</span>
+        </button>
+        <p id="statusMsg" class="status-msg"></p>
+      </div>
+    </div>
+
+    <!-- 结果区 -->
+    <div id="resultArea" class="hidden">
+      <div class="result-header">
+        <div class="result-icon">🏆</div>
+        <h2>投票结果</h2>
+        <p class="result-subtitle">票数最多的时间段为该场选定时间</p>
+      </div>
+      <div id="resultsContainer">
+        <!-- JS动态渲染 -->
+      </div>
+      <button id="refreshBtn" class="btn-secondary">🔄 刷新结果</button>
+    </div>
+
+    <!-- 底部 -->
+    <footer class="footer">
+      <p>投票数据实时保存 · 请慎重选择</p>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
